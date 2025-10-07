@@ -1,0 +1,50 @@
+---
+import { Image } from "astro:assets";
+import imageUrlBuilder from "@sanity/image-url";
+import type { ImageUrlBuilder } from "@sanity/image-url/lib/types/builder";
+import { sanityClient } from "sanity:client";
+
+interface Props {
+	node: any;
+	loading?: "eager" | "lazy" | null | undefined;
+	width?: number;
+	height?: number;
+	class?: string;
+}
+
+const builder = imageUrlBuilder(sanityClient);
+
+const { node, loading } = Astro.props;
+const { width = 960, height } = Astro.props;
+let image: ImageUrlBuilder | undefined;
+
+// See https://www.sanity.io/docs/presenting-images for general documentation on
+// presenting images, and https://www.sanity.io/docs/image-url for specifics on
+// this builder API
+try {
+	image =
+		node &&
+		node.asset &&
+		builder
+			.image(node)
+			.width(width)
+			.height(height as number)
+			.fit("crop")
+			.auto("format");
+} catch (error) {
+	console.error(error);
+}
+---
+
+{
+	image && (
+		<Image
+			loading={loading}
+			inferSize
+			width={width}
+			class={Astro.props.class}
+			src={image.url()}
+			alt={node.alt || ""}
+		/>
+	)
+}

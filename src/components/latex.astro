@@ -1,0 +1,13 @@
+---
+import "../styles/katex-min.css";
+import katex from "katex";
+
+const { node } = Astro.props;
+
+const html = katex.renderToString(node.body, {
+	throwOnError: false,
+	displayMode: true, // true for block-level, false inline
+});
+---
+
+<span set:html={html} />

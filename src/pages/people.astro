@@ -1,0 +1,49 @@
+---
+import Layout from "../layouts/layout.astro";
+import { getAllPeople } from "../sanity/lib/queries";
+import { PortableText } from "astro-portabletext";
+import Person from "../components/person.astro";
+import SanityImage from "../components/sanity-image.astro";
+
+const { higgins, past, current } = await getAllPeople();
+if (!higgins)
+	throw new Error("No person named 'Andrew Higgins' found in sanity.");
+---
+
+<Layout>
+	<section class="p-4 grid gap-4 items-stretch sm:grid-cols-[1fr_4fr] border-b">
+		<SanityImage
+			node={higgins.portrait}
+			class="not-sm:hidden pt-1 object-cover"
+		/>
+		<div class="space-y-2">
+			<div
+				class="grid grid-cols-[auto_auto_1fr] sm:grid-cols-[auto_1fr] gap-2 sm:items-center justify-end"
+			>
+				<SanityImage
+					node={higgins.portrait}
+					class="sm:hidden pt-1 size-[2.5lh]"
+				/>
+				<div>
+					<h3 class="text-2xl text-foreground">{higgins.name}</h3>
+					<p class="text-primary">{higgins.title}</p>
+				</div>
+				<div class="flex justify-end">Socials</div>
+			</div>
+
+			<div class="text-sm">
+				{higgins.bio && <PortableText value={higgins.bio} />}
+			</div>
+		</div>
+	</section>
+
+	<section class="p-4 border-b space-y-4">
+		<h2 class="text-4xl pb-2">Group Members</h2>
+		{current.map((person) => <Person person={person} />)}
+	</section>
+
+	<section class="p-4 border-b space-y-4">
+		<h2 class="text-4xl pb-2">Past Members</h2>
+		{past.map((person) => <Person person={person} />)}
+	</section>
+</Layout>

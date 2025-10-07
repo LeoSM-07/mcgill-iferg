@@ -1,40 +1,54 @@
 ---
 import Layout from "../layouts/layout.astro";
+import { PortableText } from "astro-portabletext";
+import { getFaqSections } from "../sanity/lib/queries";
+import LatexInline from "../components/latex-inline.astro";
+import Latex from "../components/latex.astro";
+import ReadMore from "../components/read-more";
 
-const faq = [
-	{
-		title:
-			"Why should we spend money on an expensive enterprise like interstellar travel when there are urgent problems to solve here at home?",
-		headline:
-			"We should do both; they are not mutually exclusive goals. Realizing interstellar travel may help address problems on Earth and ensure the long-term survival of life, just as spaceflight within our solar system has already done for us.",
-		body: "NASA, the world’s largest space agency by budget, represents less than 0.5% of total U.S. federal spending. This level activity does not come at the expense of addressing other human needs or concerns. This question has been asked about space exploration in our own solar system since the dawn of the Space Age. One of the more eloquent responses comes from Ernst Stuhlinger—a figure whose legacy is complicated by his involvement in Germany’s World War II rocket program—in a 1970 letter to Sister Mary Jucunda, a nun working in Zambia [6,7], emphasizing how Earth-observing spacecraft would come to help combat food scarcity. Today, few question the value of satellites for weather forecasting and more efficient agriculture. The tangible benefits of 20th-century space programs offer compelling evidence that investing in interstellar exploration is a fitting and forward-looking priority for the 21st century. The value in humanity’s expansion beyond Earth as an insurance policy is now widely recognized. The new concerns AI-driven existential risks only sharpen this imperative: the fundamental time-of-light delays between stars become safeguards against such threats. Only interstellar travel—self-sufficient human presence separated by light-years—can ensure that no single catastrophe can extinguish our entire species.",
-	},
-	{
-		title:
-			"How can you justify even studying the problem of interstellar flight, when people working on it will not live to see the products of their effort?",
-		headline:
-			"Perhaps a longer perspective is healthy. There is no shortage of talented young people energized to study STEM, inspired by the vision of our expansion into the galaxy, and the skills they acquire are be foundational to our technological future, interstellar or not.",
-		body: "As a professor of engineering, I have taught thousands of students and have spent considerable time understanding what motivates them. Although anecdotal, my findings suggest that few pursue STEM out of guilt or despair; most are inspired by a radiant vision of the future. I have found studies of interstellar travel a particular effective means of challenging students to think and work from fundamentals. While they may not go directly from graduation to building starships, the essential STEM skills they acquire, have been well utilized across today’s deep technology sector upon their graduation from my research group. Technology is built on physics and physics on mathematics, the latter of which presaged much of modern science. To advance, we need to lay a foundation today, and by tackling these challenges now we can incrementally hasten the arrival of interstellar capabilities. Many in the interstellar community draw inspiration from medieval cathedrals, where builders devoted their lives to projects they would never complete. Those builders remind us that laying a solid foundation today can yield achievements beyond our own lifetimes. Such thinking could supply a healthier perspective amid the anxieties of our instant-gratification era.",
-	},
-];
+const sections = await getFaqSections();
 ---
 
 <Layout>
-	<div class="space-y-4">
-		<h1
-			class="mx-auto max-w-md text-balance text-center text-foreground text-2xl font-semibold"
-		>
-			Addressing Misunderstandings in the Feasibility of Interstellar Travel
-		</h1>
-		<div class="prose grid grid-cols-2 gap-6">
-			{
-				faq.map((q) => (
-					<div>
-						<div class="text-primary">{q.title}</div>
-						<div>{q.headline}</div>
+	<div class="faq">
+		{
+			sections.map((section) => (
+				<section class="space-y-4 p-4 border-b">
+					<h3 class="w-full text-2xl text-primary">{section.title}</h3>
+
+					<div class="grid grid-cols-1 gap-4">
+						{section.questions.map((question) => (
+							<div class="space-y-2">
+								<h4 class="text-foreground text-pretty">{question.question}</h4>
+								<div class="text-sm space-y-2">
+									<PortableText
+										components={{
+											type: {
+												inlineMath: LatexInline,
+												mathBlock: Latex,
+											},
+										}}
+										value={question.answer.slice(0, 1)}
+									/>
+									<ReadMore client:load>
+										<PortableText
+											components={{
+												type: {
+													inlineMath: LatexInline,
+													mathBlock: Latex,
+												},
+											}}
+											value={question.answer.slice(1)}
+										/>
+									</ReadMore>
+								</div>
+							</div>
+						))}
 					</div>
-				))
-			}
-		</div>
+				</section>
+			))
+		}
 	</div>
 </Layout>
+
+<style></style>

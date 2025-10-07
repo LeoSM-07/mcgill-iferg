@@ -1,0 +1,44 @@
+---
+import SanityImage from "./sanity-image.astro";
+import { PortableText } from "astro-portabletext";
+import type { AllPeopleQueryResult } from "../sanity/sanity.types";
+
+interface Props {
+	person: NonNullable<AllPeopleQueryResult["higgins"]>;
+}
+
+const { person } = Astro.props;
+---
+
+<div class="grid gap-4 items-stretch sm:grid-cols-[1fr_4fr]">
+	<div>
+		{
+			person.portrait ? (
+				<SanityImage
+					width={500}
+					height={500}
+					node={person.portrait}
+					class="not-sm:hidden pt-1 object-cover"
+				/>
+			) : (
+				<div class="not-sm:hidden pt-1 aspect-square bg-neutral-900" />
+			)
+		}
+	</div>
+	<div class="space-y-2">
+		<div
+			class="grid grid-cols-[auto_auto_1fr] sm:grid-cols-[auto_1fr] gap-2 sm:items-center justify-end"
+		>
+			<SanityImage node={person.portrait} class="sm:hidden pt-1 size-[2.5lh]" />
+			<div>
+				<h3 class="text-2xl text-foreground">{person.name}</h3>
+				<p class="text-primary text-balance">{person.title}</p>
+			</div>
+			<div class="flex justify-end">Socials</div>
+		</div>
+
+		<div class="text-sm">
+			{person.bio && <PortableText value={person.bio} />}
+		</div>
+	</div>
+</div>

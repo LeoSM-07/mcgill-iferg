@@ -1,5 +1,7 @@
 ---
 import Logo from "./logo.astro";
+
+const currentPath = Astro.url.pathname;
 ---
 
 <div class="sticky top-0 z-10 border-b mb-0 border-border">
@@ -9,26 +11,67 @@ import Logo from "./logo.astro";
 		<Logo />
 
 		<button
-			class="mr-6 bg-neutral-800 border border-border p-1 px-2 h-min cursor-pointer hover:bg-neutral-700 hover:border-neutral-600 transition-colors duration-150"
+			class="bg-border/25 border hover:bg-border/75 transition-colors focus:visible:bg-border/75 focus-within:border-primary mr-6 px-2 py-1 cursor-pointer focus-within:outline-0"
 			>Contact</button
 		>
 	</header>
 	<nav class="p-2 w-full text-muted-foreground bg-background z-10 mb-0">
-		<ul class="flex flex-row justify-center not-md:gap-4 nav-list">
-			<li><a href="/">Home</a></li>
-			<li><a href="/faq">FAQ</a></li>
-			<li><a href="/publications">Publications</a></li>
-			<li><a href="/people">People</a></li>
-			<li><a href="/contact">Contact</a></li>
-			<li><a href="websites">Other Websites</a></li>
+		<ul
+			class="flex flex-row justify-center not-md:gap-4 nav-list [&>li>a]:hover:text-foreground"
+		>
+			<li>
+				<a
+					class:list={[
+						currentPath === "/"
+							? "border-b border-primary text-foreground pb-1"
+							: "",
+					]}
+					href="/">Home</a
+				>
+			</li>
+			<li>
+				<a
+					class:list={[
+						currentPath === "/faq"
+							? "border-b border-primary text-foreground pb-1"
+							: "",
+					]}
+					href="/faq">FAQ</a
+				>
+			</li>
+			<li>
+				<a
+					class:list={[
+						currentPath === "/publications"
+							? "border-b border-primary text-foreground pb-1"
+							: "",
+					]}
+					href="/publications">Publications</a
+				>
+			</li>
+			<li>
+				<a
+					class:list={[
+						currentPath === "/people"
+							? "border-b border-primary text-foreground pb-1"
+							: "",
+					]}
+					href="/people">People</a
+				>
+			</li>
+			<!-- <li> -->
+			<!-- 	<a -->
+			<!-- 		class={currentPath === "/websites" -->
+			<!-- 			? "border-b border-primary text-foreground pb-1" -->
+			<!-- 			: ""} -->
+			<!-- 		href="websites">Other Websites</a -->
+			<!-- 	> -->
+			<!-- </li> -->
 		</ul>
 	</nav>
 </div>
 
 <style>
-	a {
-		@apply hover:underline;
-	}
 	.nav-list li:not(:first-child)::before {
 		content: "•";
 		color: white; /* customize separator color */

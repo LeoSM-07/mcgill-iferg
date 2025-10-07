@@ -1,0 +1,133 @@
+---
+import Layout from "../layouts/layout.astro";
+import { getAllPapers } from "../sanity/lib/queries";
+import { PortableText } from "astro-portabletext";
+
+const { conference, journal } = await getAllPapers();
+---
+
+<Layout>
+	<section class="p-4">
+		<h2 class="text-3xl">Publications</h2>
+		<p>
+			Our research group strives to provide all our members, regardless of
+			graduate level, with opportunities to publish their work on interstellar
+			flight topics. All of our publications are listed here and available for
+			download.
+		</p>
+	</section>
+
+	<section class="px-4 pt-4">
+		<h3 class="w-full text-2xl text-primary pb-4">Journal Articles</h3>
+		<ul class="space-y-3">
+			{
+				journal.map((article) => (
+					<li class="grid grid-cols-[auto_1fr] gap-2">
+						<a
+							href={article.pdfUrl}
+							download
+							target="_blank"
+							rel="noopener noreferrer"
+							class="aspect-square h-[2lh] grid place-items-center cursor-pointer focus-within:outline-none group"
+						>
+							<span class="sr-only">Download</span>
+							<svg
+								class="m-1 p-[0.6rem] bg-border/25 border hover:bg-border/75 transition-colors group-focus-within:bg-border/75 group-focus-within:border-primary"
+								viewBox="0 0 15 15"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									d="M7.50005 1.04999C7.74858 1.04999 7.95005 1.25146 7.95005 1.49999V8.41359L10.1819 6.18179C10.3576 6.00605 10.6425 6.00605 10.8182 6.18179C10.994 6.35753 10.994 6.64245 10.8182 6.81819L7.81825 9.81819C7.64251 9.99392 7.35759 9.99392 7.18185 9.81819L4.18185 6.81819C4.00611 6.64245 4.00611 6.35753 4.18185 6.18179C4.35759 6.00605 4.64251 6.00605 4.81825 6.18179L7.05005 8.41359V1.49999C7.05005 1.25146 7.25152 1.04999 7.50005 1.04999ZM2.5 10C2.77614 10 3 10.2239 3 10.5V12C3 12.5539 3.44565 13 3.99635 13H11.0012C11.5529 13 12 12.5528 12 12V10.5C12 10.2239 12.2239 10 12.5 10C12.7761 10 13 10.2239 13 10.5V12C13 13.1041 12.1062 14 11.0012 14H3.99635C2.89019 14 2 13.103 2 12V10.5C2 10.2239 2.22386 10 2.5 10Z"
+									fill="currentColor"
+									fill-rule="evenodd"
+									clip-rule="evenodd"
+								/>
+							</svg>
+						</a>
+						<div class="citation">
+							{article.citation && <PortableText value={article.citation} />}
+						</div>
+					</li>
+				))
+			}
+		</ul>
+	</section>
+
+	<section class="px-4 pt-8">
+		<h3 class="w-full text-2xl text-primary pb-4">Conference Papers</h3>
+		<ul class="space-y-3">
+			{
+				conference.map((article) => (
+					<li class="grid grid-cols-[auto_1fr] gap-2">
+						<a
+							href={article.pdfUrl}
+							download
+							target="_blank"
+							rel="noopener noreferrer"
+							class="aspect-square h-[2lh] grid place-items-center cursor-pointer focus-within:outline-none group"
+						>
+							<span class="sr-only">Download</span>
+							<svg
+								class="m-1 p-[0.6rem] bg-border/25 border hover:bg-border/75 transition-colors group-focus-within:bg-border/75 group-focus-within:border-primary"
+								viewBox="0 0 15 15"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									d="M7.50005 1.04999C7.74858 1.04999 7.95005 1.25146 7.95005 1.49999V8.41359L10.1819 6.18179C10.3576 6.00605 10.6425 6.00605 10.8182 6.18179C10.994 6.35753 10.994 6.64245 10.8182 6.81819L7.81825 9.81819C7.64251 9.99392 7.35759 9.99392 7.18185 9.81819L4.18185 6.81819C4.00611 6.64245 4.00611 6.35753 4.18185 6.18179C4.35759 6.00605 4.64251 6.00605 4.81825 6.18179L7.05005 8.41359V1.49999C7.05005 1.25146 7.25152 1.04999 7.50005 1.04999ZM2.5 10C2.77614 10 3 10.2239 3 10.5V12C3 12.5539 3.44565 13 3.99635 13H11.0012C11.5529 13 12 12.5528 12 12V10.5C12 10.2239 12.2239 10 12.5 10C12.7761 10 13 10.2239 13 10.5V12C13 13.1041 12.1062 14 11.0012 14H3.99635C2.89019 14 2 13.103 2 12V10.5C2 10.2239 2.22386 10 2.5 10Z"
+									fill="currentColor"
+									fill-rule="evenodd"
+									clip-rule="evenodd"
+								/>
+							</svg>
+						</a>
+						<div class="citation">
+							{article.citation && <PortableText value={article.citation} />}
+						</div>
+					</li>
+				))
+			}
+		</ul>
+	</section>
+
+	<section class="px-4 pt-8">
+		<h3 class="w-full text-2xl text-primary pb-4">Other Publications</h3>
+
+		<ul class="space-y-3">
+			<li>
+				<iframe
+					width="560"
+					height="315"
+					src="https://www.youtube.com/embed/ABLnJ31AKkc?si=cmk00vSI7MVn5V9Z&start=927"
+					title="YouTube video player"
+					frameborder="0"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+					referrerpolicy="strict-origin-when-cross-origin"
+					allowfullscreen></iframe>
+			</li>
+			<li>
+				<iframe
+					width="560"
+					height="315"
+					src="https://www.youtube.com/embed/VrJybNgeU-I?si=RXPytpVYhLa7EUOk"
+					title="YouTube video player"
+					frameborder="0"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+					referrerpolicy="strict-origin-when-cross-origin"
+					allowfullscreen></iframe>
+			</li>
+			<li>
+				<iframe
+					width="560"
+					height="315"
+					src="https://www.youtube.com/embed/uaK5e4pAAuc?si=nHJXOTEbrzQAssuH"
+					title="YouTube video player"
+					frameborder="0"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+					referrerpolicy="strict-origin-when-cross-origin"
+					allowfullscreen></iframe>
+			</li>
+		</ul>
+	</section>
+</Layout>
