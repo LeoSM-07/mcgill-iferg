@@ -3,6 +3,7 @@ dist/
 # generated types
 .astro/
 .sanity/
+.cache/
 
 # dependencies
 node_modules/
