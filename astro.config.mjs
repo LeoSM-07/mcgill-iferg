@@ -8,6 +8,8 @@ import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://leosm-07.github.io",
+  base: "/mcgill-iferg",
   output: "static",
   vite: {
     plugins: [tailwindcss()],
