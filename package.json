@@ -10,6 +10,8 @@
     "sanity:typegen": "sanity schema extract --path './src/sanity/sanity.schemas.json' --enforce-required-fields --workspace=production && sanity typegen generate"
   },
   "dependencies": {
+    "@ascorbic/bluesky-loader": "^0.1.0",
+    "@astro-community/astro-embed-bluesky": "^0.1.3",
     "@astrojs/react": "^4.4.0",
     "@sanity/astro": "^3.2.10",
     "@sanity/client": "^7.12.0",
@@ -19,6 +21,7 @@
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "astro": "^5.14.1",
+    "astro-embed": "^0.9.1",
     "astro-portabletext": "^0.11.3",
     "groq": "^4.10.2",
     "htmx.org": "^2.0.7",

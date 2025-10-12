@@ -21,6 +21,10 @@
   --color-primary: #ed1b2f;
 }
 
+:root {
+  color-scheme: dark;
+}
+
 @layer base {
   ::selection {
     background: #ed1b2f;

@@ -8,7 +8,7 @@ import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://leosm-07.github.io/mcgill-iferg/",
+  site: "http://interstellarflight.space/",
   trailingSlash: "ignore",
   output: "static",
   vite: {

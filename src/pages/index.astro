@@ -1,11 +1,15 @@
 ---
+import { getCollection, type CollectionEntry, render } from "astro:content";
 import Layout from "../layouts/layout.astro";
 import { Image } from "astro:assets";
-import render from "../assets/render.png";
+import renderImage from "../assets/render.png";
+import { BlueskyPost } from "astro-embed";
+
+const posts = await getCollection("posts");
 ---
 
 <Layout>
-	<Image class="object-cover h-full -z-10" src={render} alt="" />
+	<Image class="object-cover h-full -z-10" src={renderImage} alt="" />
 	<div class="prose p-4 border-t">
 		<h2 class="text-primary text-balance font-[Univers_LT_Std_53_Extended]">
 			Per Aspera Ad Astra.
@@ -34,7 +38,16 @@ import render from "../assets/render.png";
 			interstellar researchers, generating a stream of new minds aligned to
 			realizing interstellar flight in this century.
 		</p>
+	</div>
+	<h2 class="p-4 text-2xl">Recent Posts</h2>
 
-		<!-- <h2>Recent Publications</h2> -->
+	<div class="dark grid grid-cols-2 gap-4">
+		{posts.map((post) => <BlueskyPost post={post.data} />)}
 	</div>
 </Layout>
+
+<style>
+	.avatar > img {
+		margin: 100px;
+	}
+</style>

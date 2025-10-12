@@ -1,0 +1,5 @@
+---
+const { embed } = Astro.props;
+---
+
+{embed.$type === "app.bsky.embed.external" && <div>external</div>}
