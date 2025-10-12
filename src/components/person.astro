@@ -2,6 +2,9 @@
 import SanityImage from "./sanity-image.astro";
 import { PortableText } from "astro-portabletext";
 import type { AllPeopleQueryResult } from "../sanity/sanity.types";
+import LinkedIn from "./social/linkedin.astro";
+import GitHub from "./social/github.astro";
+import Twitter from "./social/twitter.astro";
 
 interface Props {
 	person: NonNullable<AllPeopleQueryResult["higgins"]>;
@@ -34,7 +37,30 @@ const { person } = Astro.props;
 				<h3 class="text-2xl text-foreground">{person.name}</h3>
 				<p class="text-primary text-balance">{person.title}</p>
 			</div>
-			<div class="flex justify-end">Socials</div>
+			<div class="flex justify-end text-muted-foreground">
+				{person.links?.email && <a />}
+				{
+					person.links?.linkedin && (
+						<a>
+							<LinkedIn />
+						</a>
+					)
+				}
+				{
+					person.links?.twitter && (
+						<a>
+							<Twitter />
+						</a>
+					)
+				}
+				{
+					person.links?.gitHub && (
+						<a>
+							<GitHub />
+						</a>
+					)
+				}
+			</div>
 		</div>
 
 		<div class="text-sm">

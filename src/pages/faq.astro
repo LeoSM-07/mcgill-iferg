@@ -19,18 +19,8 @@ const sections = await getFaqSections();
 					<div class="grid grid-cols-1 gap-4">
 						{section.questions.map((question) => (
 							<div class="space-y-2">
-								<h4 class="text-foreground text-pretty">{question.question}</h4>
-								<div class="text-sm space-y-2">
-									<PortableText
-										components={{
-											type: {
-												inlineMath: LatexInline,
-												mathBlock: Latex,
-											},
-										}}
-										value={question.answer.slice(0, 1)}
-									/>
-									<ReadMore client:load>
+								<ReadMore question={question.question} client:load>
+									<div class="text-sm leading-relaxed space-y-2 prosal">
 										<PortableText
 											components={{
 												type: {
@@ -38,10 +28,10 @@ const sections = await getFaqSections();
 													mathBlock: Latex,
 												},
 											}}
-											value={question.answer.slice(1)}
+											value={question.answer}
 										/>
-									</ReadMore>
-								</div>
+									</div>
+								</ReadMore>
 							</div>
 						))}
 					</div>
@@ -51,4 +41,10 @@ const sections = await getFaqSections();
 	</div>
 </Layout>
 
-<style></style>
+<style>
+	.prosal {
+		a {
+			text-decoration: underline;
+		}
+	}
+</style>
