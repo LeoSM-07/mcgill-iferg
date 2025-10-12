@@ -43,56 +43,64 @@ const links: Link[] = [
 				class="flex flex-row justify-center not-md:gap-4 nav-list [&>li>a]:hover:text-foreground"
 			>
 				{
-				links.map((link) => (
-				<li>
-					<a
-						class:list={[
-							currentPath === `/${link.slug}` || currentPath === `/${link.slug}/`
-								? "border-b border-primary text-foreground pb-1"
-								: "",
-						]}
-						href={"/" + link.slug}>{link.title}</a
-					>
-				</li>
-				))
+					links.map((link) => (
+						<li>
+							<a
+								class:list={[
+									currentPath === `/${link.slug}` ||
+									currentPath === `/${link.slug}/`
+										? "border-b border-primary text-foreground pb-1"
+										: "",
+								]}
+								href={"/" + link.slug}
+							>
+								{link.title}
+							</a>
+						</li>
+					))
 				}
 			</ul>
 		</nav>
 
 		<div class="flex justify-end">
-		<button
-			class="bg-border/25 border hover:bg-border/75 transition-colors focus:visible:bg-border/75 focus-within:border-primary mr-6 px-2 py-1 cursor-pointer focus-within:outline-0"
-			>Contact</button>
+			<a
+				href="/contact"
+				class="bg-border/25 border hover:bg-border/75 transition-colors focus-visible:bg-border/75 focus-visible:border-primary mr-6 px-2 py-1 cursor-pointer focus-within:outline-0"
+				>Contact</a
+			>
 		</div>
 	</header>
 	<nav
 		class="p-2 lg:hidden w-full text-muted-foreground bg-background z-10 mb-0"
 	>
 		<ul
-			class="flex flex-row justify-center not-md:gap-4 nav-list [&>li>a]:hover:text-foreground"
+			class="flex flex-row flex-w justify-center not-md:gap-0 nav-list [&>li>a]:hover:text-foreground"
 		>
 			{
-			links.map((link) => (
-			<li>
-				<a
-					class:list={[
-						currentPath === `/${link.slug}` || currentPath === `/${link.slug}/`
-							? "border-b border-primary text-foreground pb-1"
-							: "",
-					]}
-					href={"/" + link.slug}>{link.title}</a
-				>
-			</li>
-			))
+				links.map((link) => (
+					<li>
+						<a
+							class:list={[
+								currentPath === `/${link.slug}` ||
+								currentPath === `/${link.slug}/`
+									? "border-b border-primary text-foreground pb-1"
+									: "",
+							]}
+							href={"/" + link.slug}
+						>
+							{link.title}
+						</a>
+					</li>
+				))
 			}
 		</ul>
 	</nav>
 </div>
 
 <style>
-.nav-list li:not(:first-child)::before {
-	content: "•";
-	color: white; /* customize separator color */
-	margin: 0 1rem;
-}
+	.nav-list li:not(:first-child)::before {
+		content: "•";
+		color: white; /* customize separator color */
+		margin: 0 1rem;
+	}
 </style>

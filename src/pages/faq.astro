@@ -20,7 +20,7 @@ const sections = await getFaqSections();
 						{section.questions.map((question) => (
 							<div class="space-y-2">
 								<ReadMore question={question.question} client:load>
-									<div class="text-sm leading-relaxed space-y-2 prosal">
+									<div class=" leading-relaxed space-y-2 prosal">
 										<PortableText
 											components={{
 												type: {
