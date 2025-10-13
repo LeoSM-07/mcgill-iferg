@@ -7,6 +7,16 @@ import Latex from "../components/latex.astro";
 import ReadMore from "../components/read-more";
 
 const sections = await getFaqSections();
+
+const slugify = (text: string) =>
+	text
+		.toString()
+		.normalize("NFD") // Normalize accented letters
+		.replace(/[\u0300-\u036f]/g, "") // Remove diacritics
+		.toLowerCase()
+		.trim()
+		.replace(/[^a-z0-9]+/g, "-") // Replace non-alphanumeric with hyphens
+		.replace(/^-+|-+$/g, "");
 ---
 
 <Layout>
@@ -19,7 +29,11 @@ const sections = await getFaqSections();
 					<div class="grid grid-cols-1 gap-4">
 						{section.questions.map((question) => (
 							<div class="space-y-2">
-								<ReadMore question={question.question} client:load>
+								<ReadMore
+									slug={slugify(question.question)}
+									question={question.question}
+									client:load
+								>
 									<div class=" leading-relaxed space-y-2 prosal">
 										<PortableText
 											components={{

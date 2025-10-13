@@ -1,25 +1,46 @@
-import { useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 interface ReadMoreProps {
   children: ReactNode;
   question: string;
-  buttonText?: string;
-  initiallyVisible?: boolean;
+  slug: string;
 }
 
-export default function ReadMore({
-  children,
-  question,
-  buttonText = "Read More",
-  initiallyVisible = false,
-}: ReadMoreProps) {
-  const [expanded, setExpanded] = useState(initiallyVisible);
+export default function ReadMore({ children, question, slug }: ReadMoreProps) {
+  const [expanded, setExpanded] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (window.location.hash === `#${slug}`) {
+      setExpanded(true);
+      // Let the browser handle the natural anchor scroll
+      setTimeout(() => {
+        ref.current?.scrollIntoView({ behavior: "smooth" });
+      }, 10);
+    }
+  }, [slug]);
+
+  const handleClick = () => {
+    const newExpanded = !expanded;
+    setExpanded(newExpanded);
+
+    if (newExpanded) {
+      // set hash to this question’s slug
+      window.history.replaceState(null, "", `#${slug}`);
+
+      // scroll smoothly like a heading
+      ref.current?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      // remove hash when collapsing
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+  };
 
   return (
-    <>
+    <div ref={ref} className="scroll-m-40">
       <button
         className="text-left hover:bg-neutral-800 p-3 rounded-md w-full cursor-pointer grid grid-cols-[1fr_auto] gap-2"
-        onClick={() => setExpanded((e) => !e)}
+        onClick={handleClick}
       >
         <h4 className="text-foreground text-pretty">{question}</h4>
 
@@ -43,6 +64,6 @@ export default function ReadMore({
       {expanded && (
         <div className="mt-2 space-y-2 *:*:pb-2 px-3">{children}</div>
       )}
-    </>
+    </div>
   );
 }
