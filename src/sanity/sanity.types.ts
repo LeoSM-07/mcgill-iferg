@@ -88,7 +88,7 @@ export type Publication = {
     _type: "block";
     _key: string;
   }>;
-  pdfFile: {
+  pdfFile?: {
     asset?: {
       _ref: string;
       _type: "reference";
@@ -98,6 +98,7 @@ export type Publication = {
     media?: unknown;
     _type: "file";
   };
+  url?: string;
 };
 
 export type Person = {
@@ -432,7 +433,7 @@ export type AllPeopleQueryResult = {
   }>;
 };
 // Variable: allPapersQuery
-// Query: {  "conference": *[    _type == "publication" && type == "conference"  ] | order(publishDate desc) {    title,    type,    publishDate,    citation,    "pdfUrl": pdfFile.asset->url  },  "journal": *[    _type == "publication" && type == "journal"  ] | order(publishDate desc) {    title,    type,    publishDate,    citation,    "pdfUrl": pdfFile.asset->url  }}
+// Query: {  "conference": *[_type == "publication" && type == "conference"]    | order(publishDate desc) {      title,      type,      publishDate,      citation,      "pdfUrl": pdfFile.asset->url,      "articleUrl": url  },  "journal": *[_type == "publication" && type == "journal"]    | order(publishDate desc) {      title,      type,      publishDate,      citation,      "pdfUrl": pdfFile.asset->url,      "articleUrl": url  }}
 export type AllPapersQueryResult = {
   conference: Array<{
     title: string;
@@ -457,6 +458,7 @@ export type AllPapersQueryResult = {
       _key: string;
     }> | null;
     pdfUrl: string | null;
+    articleUrl: string | null;
   }>;
   journal: Array<{
     title: string;
@@ -481,6 +483,7 @@ export type AllPapersQueryResult = {
       _key: string;
     }> | null;
     pdfUrl: string | null;
+    articleUrl: string | null;
   }>;
 };
 // Variable: allFaqSectionsQuery
@@ -505,7 +508,7 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '\n{\n  "higgins": *[\n    _type == "person" && name == "Andrew Higgins"\n  ][0],\n\n  "current": *[\n    _type == "person" &&\n    status == "present" &&\n    name != "Andrew Higgins"\n  ] | order(string::split(name, " ")[-1] asc),\n\n  "past": *[\n    _type == "person" &&\n    status == "past" &&\n    name != "Andrew Higgins"\n  ] | order(string::split(name, " ")[-1] asc)\n}\n\t\t': AllPeopleQueryResult;
-    '\n{\n  "conference": *[\n    _type == "publication" && type == "conference"\n  ] | order(publishDate desc) {\n    title,\n    type,\n    publishDate,\n    citation,\n    "pdfUrl": pdfFile.asset->url\n  },\n\n  "journal": *[\n    _type == "publication" && type == "journal"\n  ] | order(publishDate desc) {\n    title,\n    type,\n    publishDate,\n    citation,\n    "pdfUrl": pdfFile.asset->url\n  }\n}\n  ': AllPapersQueryResult;
+    '\n{\n  "conference": *[_type == "publication" && type == "conference"]\n    | order(publishDate desc) {\n      title,\n      type,\n      publishDate,\n      citation,\n      "pdfUrl": pdfFile.asset->url,\n      "articleUrl": url\n  },\n  "journal": *[_type == "publication" && type == "journal"]\n    | order(publishDate desc) {\n      title,\n      type,\n      publishDate,\n      citation,\n      "pdfUrl": pdfFile.asset->url,\n      "articleUrl": url\n  }\n}\n  ': AllPapersQueryResult;
     '*[_type == "faqSection"] | order(part asc)': AllFaqSectionsQueryResult;
   }
 }
